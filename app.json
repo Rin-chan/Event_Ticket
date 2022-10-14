@@ -2,6 +2,8 @@
   "expo": {
     "name": "Event_Ticket",
     "slug": "Event_Ticket",
+    "owner": "rinchan123",
+    "scheme": "event_ticket",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,7 +20,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "userInterfaceStyle": "automatic"
     },
     "android": {
       "adaptiveIcon": {
