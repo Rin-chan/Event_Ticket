@@ -1,7 +1,9 @@
 import React from 'react';
-import { ActivityIndicator, StatusBar, StyleSheet, View, } from 'react-native';
+import { ActivityIndicator, StatusBar, View, Appearance } from 'react-native';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from "axios";
+
+import { Colors } from '../styles';
 
 class AuthLoadingScreen extends React.Component {
   constructor(props) {
@@ -16,15 +18,23 @@ class AuthLoadingScreen extends React.Component {
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
 
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    //this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    this.props.navigation.navigate('App');
 
     return;
   };
 
   // Render any loading content that you like here
   render() {
+    const colorScheme = Appearance.getColorScheme();
+
+    let BACKGROUND_COLOR_DEFAULT = Colors.WHITE;
+    if (colorScheme === 'dark') {
+      BACKGROUND_COLOR_DEFAULT = Colors.NEUTRAL_DARK_900;
+    }
+
     return (
-      <View>
+      <View style={{flex: 1, backgroundColor: BACKGROUND_COLOR_DEFAULT}}>
         <ActivityIndicator />
         <StatusBar barStyle="default" />
       </View>

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import AuthLoadingScreen from './navigations/authLoading';
@@ -9,7 +9,7 @@ const Stack = createNativeStackNavigator();
 
 const Index = () => {
     return (
-        <Stack.Navigator initialRouteName="Load" screenOptions={{headerShown: false}}>
+        <Stack.Navigator initialRouteName="Load" screenOptions={{headerShown: false, gestureEnabled: false}}>
             <Stack.Screen name="Load" component={AuthLoadingScreen}/>
             <Stack.Screen name="Auth" component={AuthNavigator} />
             <Stack.Screen name="App" component={AppNavigator} />

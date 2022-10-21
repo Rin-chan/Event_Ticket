@@ -1,4 +1,5 @@
 export const WHITE = '#FFFFFF';
+export const BLACK = '#000000';
 
 // Brand Color
 export const BRAND_COLOR_DARK_900 = '#070304';

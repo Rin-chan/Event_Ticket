@@ -8,7 +8,7 @@ const Stack = createStackNavigator();
 const AppNavigator = () => {
     return (
         <Stack.Navigator initialRouteName="Index" screenOptions={{headerShown: false}}>
-            <Stack.Screen name="Index" component={IndexScreen}/>
+            <Stack.Screen name="Index" component={IndexScreen} />
         </Stack.Navigator>
     );
 }
