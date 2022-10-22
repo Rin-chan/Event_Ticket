@@ -5,9 +5,9 @@ import { LoadingComponent } from '../../components';
 
 import { Colors } from '../../styles';
 
-const HomeScreen = () => {
-    const colorScheme = Appearance.getColorScheme();
+const colorScheme = Appearance.getColorScheme();
 
+const HomeScreen = () => {
     let BACKGROUND_COLOR_DEFAULT = Colors.WHITE;
     let BACKGROUND_COLOR_SECOND = Colors.BRAND_COLOR_LIGHT_100;
     let BACKGROUND_COLOR_THIRD = Colors.BRAND_COLOR_LIGHT_200;
