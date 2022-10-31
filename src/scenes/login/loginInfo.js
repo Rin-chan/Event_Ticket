@@ -1,16 +1,20 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, SafeAreaView, Text, Image, Dimensions, Appearance, StyleSheet, TouchableOpacity } from 'react-native';
 import AppIntroSlider from 'react-native-app-intro-slider';
 import Icon from 'react-native-vector-icons/FontAwesome5';
+import * as WebBrowser from 'expo-web-browser';
+import * as Google from 'expo-auth-session/providers/google';
+import axios from "axios";
+
+WebBrowser.maybeCompleteAuthSession();
 
 import { Colors } from '../../styles';
 
 const _widthHeader = Dimensions.get('screen').width * 0.15;
 const _widthImage = Dimensions.get('screen').width * 0.7;
-//const colorScheme = Appearance.getColorScheme();
-const colorScheme = "dark";
+const colorScheme = Appearance.getColorScheme();
 
-const LoginInfoScreen = () => {
+const LoginInfoScreen = ({navigation}) => {
     const [done, onDone] = useState(false);
 
     let BACKGROUND_COLOR_DEFAULT = Colors.WHITE;
@@ -48,7 +52,6 @@ const LoginInfoScreen = () => {
 
         DOT_COLOR = Colors.WHITE;
 
-        // TO BE CHANGED
         image1 = require("../../assets/images/info/1_dark.png");
         image2 = require("../../assets/images/info/2_dark.png");
         image3 = require("../../assets/images/info/3_dark.png");
@@ -89,6 +92,22 @@ const LoginInfoScreen = () => {
             color: TEXT_GOOGLE_BTN
         }
     })
+
+    const [request, response, promptAsync] = Google.useAuthRequest({
+        expoClientId: '432797909197-0k3bnuvkonmmeatnqof2tgecgeq79bsk.apps.googleusercontent.com',
+        iosClientId: '432797909197-0k3bnuvkonmmeatnqof2tgecgeq79bsk.apps.googleusercontent.com',
+        androidClientId: '432797909197-0k3bnuvkonmmeatnqof2tgecgeq79bsk.apps.googleusercontent.com',
+        webClientId: '432797909197-0k3bnuvkonmmeatnqof2tgecgeq79bsk.apps.googleusercontent.com',
+    });
+
+    useEffect(() => {
+        if (response?.type === 'success') {
+          const { authentication } = response;
+            axios.get('https://www.googleapis.com/oauth2/v3/userinfo?access_token='+authentication.accessToken)
+                .then(function(response){
+            })
+          }
+    }, [response]);
 
     const slides = [
         {
@@ -144,6 +163,7 @@ const LoginInfoScreen = () => {
                 <View style={styles.buttonContainer}>
                     <TouchableOpacity
                         style={[colorStyle.btnColorNext, styles.button]}
+                        onPress={() => navigation.navigate("Login")}
                     >
                         <View style={styles.buttonTextContainer}>
                             <Text style={[colorStyle.btnNextTextColor, styles.buttonText]}>Login</Text>
@@ -152,6 +172,7 @@ const LoginInfoScreen = () => {
 
                     <TouchableOpacity
                         style={[colorStyle.btnColorGoogle, styles.button, {borderWidth: StyleSheet.hairlineWidth}]}
+                        onPress={() => promptAsync()}
                     >
                         <View style={[styles.buttonTextContainer]}>
                             <Icon name="google" size={20} style={[colorStyle.textColorSecondary, {marginRight: 10, alignSelf: "center"}]}/>
