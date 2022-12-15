@@ -17,15 +17,16 @@ const LoginScreen = () => {
     let BACKGROUND_COLOR_FOURTH = Colors.BRAND_COLOR_LIGHT_300;
     let BACKGROUND_COLOR_FIFTH = Colors.BRAND_COLOR_LIGHT_400;
 
+    let LOGIN_BUTTON = Colors.INFORMATION_DEFAULT;
+    let LOGIN_BUTTON_TEXT = Colors.WHITE;
+
     let TEXT_COLOR_PRIMARY = Colors.BLACK;
     let TEXT_COLOR_SECONDARY = Colors.BRAND_COLOR_LIGHT_400;
 
     let NEXT_BTN = Colors.INFORMATION_DEFAULT;
-    let GOOGLE_BTN = Colors.WHITE;
+    let GOOGLE_BTN = Colors.INFORMATION_LIGHT_100;
     let TEXT_NEXT_BTN = Colors.WHITE;
-    let TEXT_GOOGLE_BTN = Colors.BRAND_COLOR_LIGHT_400;
-
-    let DOT_COLOR = Colors.BRAND_COLOR_LIGHT_200;
+    let TEXT_GOOGLE_BTN = Colors.INFORMATION_DARK_800;
 
     if (colorScheme === 'dark') {
         // Use dark color scheme
@@ -37,8 +38,8 @@ const LoginScreen = () => {
 
         TEXT_COLOR_PRIMARY = Colors.WHITE;
 
-        GOOGLE_BTN = Colors.BRAND_COLOR_LIGHT_200;
-        TEXT_GOOGLE_BTN = Colors.BLACK;
+        GOOGLE_BTN = Colors.INFORMATION_DARK_800;
+        TEXT_GOOGLE_BTN = Colors.INFORMATION_LIGHT_100;
 
         DOT_COLOR = Colors.WHITE;
     }
@@ -77,6 +78,12 @@ const LoginScreen = () => {
         btnGoogleTextColor: {
             color: TEXT_GOOGLE_BTN
         },
+        btnLogin: {
+            backgroundColor: LOGIN_BUTTON
+        },
+        btnLoginText: {
+            color: LOGIN_BUTTON_TEXT
+        },
     })
 
     const [request, response, promptAsync] = Google.useAuthRequest({
@@ -98,26 +105,37 @@ const LoginScreen = () => {
     return (
         <View style={[colorStyle.backgroundColorDefault, {flex: 1}]}>
             <SafeAreaView style={{flex: 1, margin: 20}}>
-                <Text style={[colorStyle.textColorPrimary, styles.title]}>Login for Tickme</Text>
-                <Text style={[colorStyle.textColorSecondary,styles.subtitle]}>Welcome back you've been missed!</Text>
+                <View style={{marginTop: 20, marginBottom: 20}}>
+                    <Text style={[colorStyle.textColorPrimary, styles.title]}>Login for Tickme</Text>
+                    <Text style={[colorStyle.textColorSecondary,styles.subtitle]}>Welcome back you've been missed!</Text>
+                </View>
 
                 <View>
-                    <TextInput style={[styles.textInput]} />
-                    <TextInput style={[styles.textInput]} />
+                    <View style={[styles.textInput]}>
+                        <Icon name="envelope" size={20} style={styles.inputIconSize} />
+                        <TextInput style={{flex: 1}} />
+                    </View>
+
+                    <View style={[styles.textInput]}>
+                        <Icon name="lock" size={20} style={styles.inputIconSize} />
+                        <TextInput style={{flex: 1}} />
+                    </View>
                 </View>
                 
                 <TouchableOpacity>
-                    <Text style={[colorStyle.textColorSecondary]}>Recovery Password?</Text>
-                </TouchableOpacity>
-
-                <TouchableOpacity>
-                    <Text style={[colorStyle.textColorPrimary]}>Login</Text>
+                    <Text style={[colorStyle.textColorSecondary, {textAlign: "right", margin: 5}]}>Recovery Password?</Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    style={{flexDirection: "row"}}
+                    style={[colorStyle.btnLogin, {margin: 15, marginTop: 25, padding: 15, alignItems: "center", borderRadius: 25}]}
                 >
-                    <Text style={colorStyle.textColorSecondary}>Join with us: </Text>
+                    <Text style={[colorStyle.btnLoginText]}>Login</Text>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                    style={{margin: 5, flexDirection: "row", alignSelf: "center"}}
+                >
+                    <Text style={colorStyle.textColorSecondary}>Join with us. </Text>
                     <Text style={[colorStyle.textColorPrimary, styles.boldText]}>Create Account</Text>
                 </TouchableOpacity>
 
@@ -127,14 +145,14 @@ const LoginScreen = () => {
                     <View style={[styles.horizontalBreak]} />
                 </View>
 
-                <View>
+                <View style={{flexDirection: "row", justifyContent: "space-around"}}>
                     <TouchableOpacity
-                        style={{justifyContent: 'center', alignItems:'center', marginLeft: 10, marginTop: 5}}
+                        style={[colorStyle.btnColorGoogle, {justifyContent: 'center', alignItems:'center', padding: 10, paddingLeft: 12, paddingRight: 12, borderRadius: 40}]}
                         disabled={!request}
                         onPress={() => {
                             promptAsync();
                         }}>
-                        <Icon name="google" size={30} />
+                        <Icon name="google" size={25} style={colorStyle.btnGoogleTextColor}/>
                     </TouchableOpacity>
                 </View>
 
@@ -156,21 +174,28 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 26,
         alignSelf: "center",
-        margin: 8,
+        margin: 5,
         fontWeight: "bold"
     },
     subtitle: {
         fontSize: 18,
         alignSelf: "center",
-        margin: 8
+        margin: 5
     },
     textInput: {
-        borderRadius: 5,
+        flexDirection: "row",
+        borderRadius: 20,
         borderWidth: 1,
         margin: 10
     },
+    inputIconSize: {
+        margin: 10,
+        marginLeft: 15
+    },
     loginBreak: {
         flexDirection: "row",
+        marginTop: "8%",
+        marginBottom: "8%"
     },
     horizontalBreak: {
         flex: 1,
@@ -185,7 +210,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         flexWrap: "wrap",
         justifyContent: "center"
-    }
+    },
 });
 
 export default LoginScreen;
